@@ -15,11 +15,12 @@ add_subdirectory(libs/sdl_image)
 # so it has to be added as a library instead.
 
 # Should be able to build with just these sources:
-# libs/imgui/imgui*.cpp (except imgui_demo.cpp)
+# libs/imgui/imgui*.cpp (except imgui_demo.cpp unless we want to run the demo content)
 # libs/imgui/backends/imgui_impl_sdl.cpp
 # libs/imgui/backends/imgui_impl_opengl3.cpp
 add_library(imgui
         libs/imgui/imgui.cpp
+        libs/imgui/imgui_demo.cpp
         libs/imgui/imgui_draw.cpp
         libs/imgui/imgui_tables.cpp
         libs/imgui/imgui_widgets.cpp

@@ -8,9 +8,18 @@ using [CMake](https://cmake.org/) and [Git](https://git-scm.com/) submodules to 
 
 ### Usage
 
-- Clone the repository thusly to also fetch the submodule repositories (assuming you're using a relatively recent version of git):
+*Assumes you've already setup your [build toolchain](https://www.jetbrains.com/help/clion/toolchains.html) if using CLion*
+
+- Clone the repository thusly to also fetch the submodule repositories
+
 ```bash
+# if you're using a relatively recent version of git:
 $ git clone --recurse-submodules https://github.com/bploeckelman/sdl_image.git
+
+# otherwise:
+$ git clone https://github.com/bploeckelman/sdl_imgui.git
+$ cd sdl_imgui
+$ git submodule update --init
 ```
 
 - Open the cloned folder in an IDE like [Clion](https://www.jetbrains.com/clion/) and cross your fingers while CMake does it's business...
@@ -50,8 +59,9 @@ I opened and closed a lot of browser tabs during the development of this repo, h
   - A better solution that doesn't require any changes to the library sources is to just get a 64 bit Visual Studio for your toolchain
 - SDL_image isn't really used in this example but I wanted to have a working example for my own projects. Setting up [stb_image](https://github.com/nothings/stb) would probably be better, though it's a bit more advanced to use so that's left as an exercise for the reader.
 - CMake deletes `libs/sdl_image/external/zlib-1.2.11/zconf.h` during the build process, leaving the `libs/sdl_image` dependency in a modified state.
-  - This doesn't cause any problems with the build, but it is unsatisfying to have an unstaged change just hanging out in git. Open to suggestions for how to handle this.
-- There may also be some modifications to `libs/sdl_image` in the `Xcode/Frameworks/webp.framework` subdirectories but I was able to revert these in the submodule folder and they didn't come back, so ¯\_ (ツ)_/¯
+  - This doesn't cause any problems with the build, but it is unsatisfying to have an unstaged change just hanging out in git.
+  - There may also be some modifications to `libs/sdl_image` in the `Xcode/Frameworks/webp.framework` subdirectories but I was able to revert these in the submodule folder and they didn't come back, so ¯\\_ (ツ)_/¯
+  - Added a flag to .gitmodules to ignore a dirty state for `libs/sdl_image` which 'solves' this problem. *(open to other suggestions for how to handle these)*
 - **SDL and SDL_image are statically linked**
   - I know there are issues with this but I find it more convenient than setting up CMake custom commands to copy shared libs into build folders as a post-build step in order to run while developing.
 

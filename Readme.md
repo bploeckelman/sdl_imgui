@@ -45,6 +45,9 @@ I opened and closed a lot of browser tabs during the development of this repo, h
 
 ## Quirks
 
+- If using a 32-bit Visual Studio toolchain, there's a symbol conflict on `__ftol2_sse` between SDL and the Microsoft C runtime (MSVCRT)
+  - This can be fixed by adding the following to **libs/sdl/CMakeLists.txt**: `add_definitions(-DHAVE_LIBC)`
+  - A better solution that doesn't require any changes to the library sources is to just get a 64 bit Visual Studio for your toolchain
 - SDL_image isn't really used in this example but I wanted to have a working example for my own projects. Setting up [stb_image](https://github.com/nothings/stb) would probably be better, though it's a bit more advanced to use so that's left as an exercise for the reader.
 - CMake deletes `libs/sdl_image/external/zlib-1.2.11/zconf.h` during the build process, leaving the `libs/sdl_image` dependency in a modified state.
   - This doesn't cause any problems with the build, but it is unsatisfying to have an unstaged change just hanging out in git. Open to suggestions for how to handle this.
